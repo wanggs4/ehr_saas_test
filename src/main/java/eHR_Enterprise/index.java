@@ -1,4 +1,4 @@
-package 易HR_企业端;
+package eHR_Enterprise;
 
 import static org.testng.Assert.assertFalse;
 
@@ -14,7 +14,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.internal.WebElementToJsonConverter;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import com.thoughtworks.selenium.SeleneseTestNgHelper;
@@ -24,47 +27,43 @@ import junit.framework.Assert;
 //import utolity.log;
 import utolity.utills;
 
-public class 首页 {
+public class index {
 
 	@BeforeMethod
-	public void setUp() {
-		System.setProperty("webdriver.chrome.driver",
-				"C:\\Users\\guosheng.wang\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
-		utills.driver = new ChromeDriver();
-		utills.driver.manage().window().maximize();
-		utills.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	public void openBrowser() {
+		utills.openBrowser();
 	}
 
 	public static void login首页(String user, String pwd) {
-		utills.driver.get(utills.生产环境Url);
+		utills.driver.get(utills.LoginFormalUrl);
 		utills.login(user, pwd);
 	}
 
-	@Test
+	@BeforeTest
 	public void 首页title() {
-		login首页("18612533709", "123456");
+		login首页(utills.TestUser, utills.TestPwd);
 		Assert.assertEquals(utills.driver.getTitle(), "首页-易HR企业端");
 	}
 
-	@Test
+	@BeforeTest
 	public void 首页logo() {
-		login首页("18612533709", "123456");
+		login首页(utills.TestUser, utills.TestPwd);
 		boolean logo = utills.driver.findElement(By.className("hd-logobox")).findElement(By.tagName("img"))
 				.getAttribute("src").contentEquals("images/head/head-logo.png");
 		Assert.assertFalse("企业端首页左上角人事服务系统logo存在", logo);
 	}
 
-	@Test
+	@BeforeTest
 	public void 首页_消息代办() {
-		login首页("18612533709", "123456");
+		login首页(utills.TestUser, utills.TestPwd);
 		boolean 消息代办 = utills.driver.findElement(By.xpath("//*[@class='con-center fl-left']")).getAttribute("h2")
 				.contentEquals("消息待办");
 		Assert.assertFalse("消息代办存在", 消息代办);
 	}
 
-	@Test
+	@BeforeTest
 	public void 首页_信息提示() {
-		login首页("18612533709", "123456");
+		login首页(utills.TestUser, utills.TestPwd);
 		WebElement xpath = utills.driver.findElement(By.xpath("//*[@class='right-bar fl-left']"));
 		boolean 信息 = xpath.getAttribute("h2").equals(" 信息提示");
 		Assert.assertFalse("首页右侧【信息提示】存在", 信息);
@@ -88,17 +87,17 @@ public class 首页 {
 			// Assert.assertFalse("首页右侧【信息提示】存在",信息2);
 		}
 	}
-	
-	@Test
+
+	@BeforeTest
 	public void 首页_功能模块() {
-		login首页("18612533709", "123456");
-		
-		Assert.assertEquals("消息代办存在","");
+		login首页(utills.TestUser, utills.TestPwd);
+
+		Assert.assertEquals("消息代办存在", "");
 	}
 
 	@AfterMethod
-	public void After1() {
-		utills.driver.quit();
+	public void closeBrowser() {
+		utills.closeBrowser();
 	}
 
 }
