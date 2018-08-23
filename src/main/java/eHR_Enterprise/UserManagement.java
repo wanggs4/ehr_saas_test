@@ -15,32 +15,32 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import utolity.log;
-import utolity.utills;
+import utolity.Log;
+import utolity.Utills;
 
-public class userManagement {
+public class UserManagement {
 
 
 	//被注释的方法将在每一个测试方法调用前运行
 	@BeforeMethod
-	public void openBrowser() {
-		utills.openBrowser();
+	public void openBrowser() throws InterruptedException {
+//		utills utills=new utills();
+		Utills.openBrowser();
+		Utills.driver.get(Utills.LoginTestUrl);
+		Thread.sleep(3000);
+		Utills.login(Utills.TestUser, Utills.TestPwd);
 	}
 
 	//被注释的方法将在测试运行前运行
-	@BeforeTest
+	@Test
 	public void testa() throws Exception {
-		utills.module("员工管理");
-		WebElement wl = utills.driver.findElement(By.xpath(".//*[@id='_3_']"));
-		Select te = new Select(wl);
-		// String we = te.getFirstSelectedOption().getText();
-		// assertEquals("",we);
-		te.selectByValue("16");
+		Utills.module("员工管理");
+		
 	}
 	
 	//被注释的方法将在每一个测试方法调用后运行
 	@AfterMethod
 	public void closeBrowser() {
-		utills.closeBrowser();
+		Utills.closeBrowser();
 	}
 }

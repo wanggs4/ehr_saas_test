@@ -3,8 +3,8 @@ package utolity;
 
 import org.apache.log4j.Logger;
 
-public class log {
-	public static Logger log = Logger.getLogger(log.class.getName());
+public class Log {
+	public static Logger log = Logger.getLogger(Log.class.getName());
 	
 	public static void info(String message){
 		System.out.println(message);

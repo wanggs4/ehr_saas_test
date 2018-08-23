@@ -16,26 +16,33 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-public class utills {
+public class Utills {
 	public static WebDriver driver;
 
 	public static final String LoginTestUrl = "http://47.92.110.143:9999/www/other/login.html";
 	public static final String LoginFormalUrl = "https://www.ctgpayroll.com/www/index.html";
 	public static final String TestUser = "18612533709";
 	public static final String TestPwd = "123456";
+	public static final String TestUser1 = "18612533709";
+	public static final String TestPwd1 = "999999";
 
 	public static void login(String user, String pwd) {
-		driver.findElement(By.linkText("企业登录")).click();
-		try {
-			driver.findElement(By.name("mobile")).sendKeys(user);
-			driver.findElement(By.name("password")).sendKeys(pwd);
-			driver.findElement(By.className("register-btn")).click();
-		} catch (Exception e) {
-			// TODO: handle exception
-			driver.findElement(By.className("register-btn")).click();
+		String text = "企业登录";
+		String text1 = "请登录";
+		// String text3 = "员工登录";
+		if (Utills.driver.findElement(By.linkText(text)).equals(text)) {
+			Utills.driver.findElement(By.name("mobile")).sendKeys(user);
+			Utills.driver.findElement(By.name("password")).sendKeys(pwd);
+			Utills.driver.findElement(By.className("register-btn")).click();
+		} else if (Utills.driver.findElement(By.linkText(text1)).equals(text1)) {
+			Utills.driver.findElement(By.name("mobile")).sendKeys(user);
+			Utills.driver.findElement(By.name("password")).sendKeys(pwd);
+			Utills.driver.findElement(By.className("register-btn")).click();
+		} else {
+			Utills.driver.findElement(By.className("register-btn")).click();
 			Alert alert = driver.switchTo().alert();
-			String text = alert.getText();
-			System.out.println(text);
+			String text2 = alert.getText();
+			System.out.println(text2);
 		}
 	}
 
@@ -45,22 +52,31 @@ public class utills {
 	public static void openBrowser() {
 		System.setProperty("webdriver.chrome.driver",
 				"C:\\Users\\guosheng.wang\\AppData\\Local\\Google\\Chrome\\Application\\chromedriver.exe");
-		utills.driver = new ChromeDriver();
-		utills.driver.manage().window().maximize();
-		utills.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		Utills.driver = new ChromeDriver();
+		Utills.driver.manage().window().maximize();
+		// utills.driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 	}
 
 	/**
 	 * 关闭浏览器
 	 */
 	public static void closeBrowser() {
-		utills.driver.quit();
+		Utills.driver.quit();
 	}
 
 	public static void module(String module) {
-		utills.driver.get(utills.LoginTestUrl);
-		utills.login(utills.TestUser, utills.TestPwd);
-		utills.driver.findElement(By.linkText(module)).click();
+		Utills.driver.get(Utills.LoginTestUrl);
+		Utills.login(Utills.TestUser, Utills.TestPwd);
+		Utills.driver.findElement(By.linkText(module)).click();
+	}
+
+	/**
+	 * 下拉框操作得方法
+	 */
+	public static void select() {
+		WebElement wl = Utills.driver.findElement(By.xpath(".//*[@id='_3_']"));
+		Select te = new Select(wl);
+		te.selectByValue("16");
 	}
 
 	/**
@@ -135,7 +151,7 @@ public class utills {
 			locat = By.linkText(locator);
 			break;
 		default:
-			log.warn("Can not find the locator type. locator type is:" + locatorType);
+			Log.warn("Can not find the locator type. locator type is:" + locatorType);
 			break;
 		}
 		return locat;
@@ -154,7 +170,7 @@ public class utills {
 		element = driver.findElement(locat);
 		if (!element.isDisplayed()) {
 			// System.out.println(element + "~~~~~~~~~~~~~~");
-			log.warn("Can not find the element:" + element);
+			Log.warn("Can not find the element:" + element);
 		}
 		return element;
 
@@ -174,15 +190,15 @@ public class utills {
 			if (inputData != null) {
 				getElement(locator).clear();
 				getElement(locator).sendKeys(inputData);
-				log.info("test data :" + inputData + "is input.");
+				Log.info("test data :" + inputData + "is input.");
 			} else {
 			}
 
-			inputData = utills.getTestData(value);
+			inputData = Utills.getTestData(value);
 			if (inputData != null) {
 				getElement(locator).clear();
 				getElement(locator).sendKeys(inputData);
-				log.info("test data :" + inputData + "is input.");
+				Log.info("test data :" + inputData + "is input.");
 			}
 		}
 	}
@@ -197,18 +213,18 @@ public class utills {
 
 	public static void inputValue(String value, String locator) {
 		String inputData = "";
-		inputData = utills.getTestData(value);
+		inputData = Utills.getTestData(value);
 		if (inputData != null) {
 			getElement(locator).clear();
 			getElement(locator).sendKeys(inputData);
-			log.info("test data :" + inputData + "is input.");
+			Log.info("test data :" + inputData + "is input.");
 		}
 	}
 
 	/**
 	 * 封装打开浏览器
 	 */
-	public static void openBrowser(String url, String browser) {
+	public static void openBrowser1(String url, String browser) {
 		// 判断
 		switch (browser) {
 		case "firefox":
@@ -226,7 +242,7 @@ public class utills {
 			driver = new InternetExplorerDriver();
 			break;
 		default:
-			log.warn("Can not find the browser type. and the browser type is :" + browser);
+			Log.warn("Can not find the browser type. and the browser type is :" + browser);
 			break;
 		}
 		driver.get(url);
@@ -244,7 +260,7 @@ public class utills {
 		WebElement element;
 		element = getElement(locator);
 		element.click();
-		log.info(element + "is clicked");
+		Log.info(element + "is clicked");
 
 	}
 
@@ -264,7 +280,7 @@ public class utills {
 		} else {
 			select.selectByVisibleText(dateValue);
 		}
-		log.info("is selected" + dateValue);
+		Log.info("is selected" + dateValue);
 	}
 
 	// 封装断言的方法,存两个值

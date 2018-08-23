@@ -26,7 +26,7 @@ public class ExcelData {
 			XSSFWorkbook work = new XSSFWorkbook(fs);
 			sheet = work.getSheet(sheetname);
 		} catch (IOException e) {
-			log.info("读取Excel测试数失败");
+			Log.info("读取Excel测试数失败");
 			e.printStackTrace();
 		}
 //		XSSFworkbook专门来读取Excel表的		
@@ -54,7 +54,7 @@ public class ExcelData {
 		cellvalue="";
 		break;
 		default:
-			log.warn("Excel data type does not exist. Cell type is: " +cell.getCellType() + "可能存在风险" );		
+			Log.warn("Excel data type does not exist. Cell type is: " +cell.getCellType() + "可能存在风险" );		
 	}
 		return cellvalue;
 		}
@@ -74,7 +74,7 @@ public class ExcelData {
 			}
 		}
 		if(i>rowcount){
-			log.error("[getRowContains]: Can not find " + key);		
+			Log.error("[getRowContains]: Can not find " + key);		
 		}
 		return i;
 	}
@@ -106,7 +106,7 @@ public class ExcelData {
 					mapData.put(keyValue, value);
 				break;
 				default:
-					log.warn("Excel data type does not exist. Cell type is: " +cell2.getCellType() + "可能存在风险" );		
+					Log.warn("Excel data type does not exist. Cell type is: " +cell2.getCellType() + "可能存在风险" );		
 			}
 				
 			}
@@ -127,7 +127,7 @@ public class ExcelData {
 				lists = csvReader.readAll();
 				csvReader.close();
 			} catch (IOException e) {
-				log.error("Fail to get the web locators from ObjectRepository file. ");
+				Log.error("Fail to get the web locators from ObjectRepository file. ");
 				e.printStackTrace();
 			} 
 				

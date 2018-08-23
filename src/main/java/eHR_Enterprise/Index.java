@@ -25,46 +25,46 @@ import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
 
 import junit.framework.Assert;
 //import utolity.log;
-import utolity.utills;
+import utolity.Utills;
 
-public class index {
+public class Index {
 
 	@BeforeMethod
 	public void openBrowser() {
-		utills.openBrowser();
+//		utills.openBrowser();
 	}
 
 	public static void login首页(String user, String pwd) {
-		utills.driver.get(utills.LoginFormalUrl);
-		utills.login(user, pwd);
+		Utills.driver.get(Utills.LoginFormalUrl);
+		Utills.login(user, pwd);
 	}
 
 	@BeforeTest
 	public void 首页title() {
-		login首页(utills.TestUser, utills.TestPwd);
-		Assert.assertEquals(utills.driver.getTitle(), "首页-易HR企业端");
+		login首页(Utills.TestUser, Utills.TestPwd);
+		Assert.assertEquals(Utills.driver.getTitle(), "首页-易HR企业端");	
 	}
 
 	@BeforeTest
 	public void 首页logo() {
-		login首页(utills.TestUser, utills.TestPwd);
-		boolean logo = utills.driver.findElement(By.className("hd-logobox")).findElement(By.tagName("img"))
+		login首页(Utills.TestUser, Utills.TestPwd);
+		boolean logo = Utills.driver.findElement(By.className("hd-logobox")).findElement(By.tagName("img"))
 				.getAttribute("src").contentEquals("images/head/head-logo.png");
 		Assert.assertFalse("企业端首页左上角人事服务系统logo存在", logo);
 	}
 
 	@BeforeTest
 	public void 首页_消息代办() {
-		login首页(utills.TestUser, utills.TestPwd);
-		boolean 消息代办 = utills.driver.findElement(By.xpath("//*[@class='con-center fl-left']")).getAttribute("h2")
+		login首页(Utills.TestUser, Utills.TestPwd);
+		boolean 消息代办 = Utills.driver.findElement(By.xpath("//*[@class='con-center fl-left']")).getAttribute("h2")
 				.contentEquals("消息待办");
 		Assert.assertFalse("消息代办存在", 消息代办);
 	}
 
 	@BeforeTest
 	public void 首页_信息提示() {
-		login首页(utills.TestUser, utills.TestPwd);
-		WebElement xpath = utills.driver.findElement(By.xpath("//*[@class='right-bar fl-left']"));
+		login首页(Utills.TestUser, Utills.TestPwd);
+		WebElement xpath = Utills.driver.findElement(By.xpath("//*[@class='right-bar fl-left']"));
 		boolean 信息 = xpath.getAttribute("h2").equals(" 信息提示");
 		Assert.assertFalse("首页右侧【信息提示】存在", 信息);
 		// WebElement h2=(WebElement) xpath.findElements(By.tagName("h2"));
@@ -90,14 +90,14 @@ public class index {
 
 	@BeforeTest
 	public void 首页_功能模块() {
-		login首页(utills.TestUser, utills.TestPwd);
+		login首页(Utills.TestUser, Utills.TestPwd);
 
 		Assert.assertEquals("消息代办存在", "");
 	}
 
 	@AfterMethod
 	public void closeBrowser() {
-		utills.closeBrowser();
+		Utills.closeBrowser();
 	}
 
 }
